@@ -83,7 +83,6 @@ def run_simulation(env, agent, metrics, num_steps, is_rl_agent, seed=100, agent_
         'fn_0':0,
         'fn_1':0
       }
-
       for i in range(1000):
         if random.uniform(0, 1) < epsilon:
           action = env.action_space.sample()
@@ -104,8 +103,8 @@ def run_simulation(env, agent, metrics, num_steps, is_rl_agent, seed=100, agent_
         state = next_state
         prev_bank_cash = current_bank_cash
 
-      if done:
-        break
+        if done:
+          break
   else:
     for _ in simulation_iterator(num_steps):
       # Update the agent with any changes to the observation or action space.

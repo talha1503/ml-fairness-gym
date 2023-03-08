@@ -28,7 +28,6 @@ import run_util
 from agents import classifier_agents
 from agents import oracle_lending_agent
 from agents import threshold_policies
-from agents import qlearning_agent
 from environments import lending
 from environments import lending_params
 from metrics import error_metrics
@@ -139,8 +138,7 @@ class Experiment(core.Params):
       metrics['cumulative_loans'] = lending_metrics.CumulativeLoans(env)
       metrics['cumulative_recall'] = lending_metrics.CumulativeRecall(env)
 
-    metric_results = run_util.run_simulation(env, agent, metrics, is_rl_agent,
-                                             self.num_steps, self.seed)
+    metric_results = run_util.run_simulation(env, agent, metrics, self.num_steps, is_rl_agent, self.seed)
     # report = {
     #     'environment': {
     #         'name': env.__class__.__name__,
