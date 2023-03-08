@@ -141,7 +141,7 @@ def update_equalized_group_dict(equalized_group_dict, group, will_default, actio
     return equalized_group_dict
 
 
-def qlearning_reward_function(env, action, prev_bank_cash, current_bank_cash, equalized_group_dict, bank_cash_multiplier=1, tpr_diff_multiplier=1):
+def qlearning_reward_function(env, action, prev_bank_cash, current_bank_cash, equalized_group_dict, bank_cash_multiplier=1, tpr_diff_multiplier=10):
     if action == 0:
         return 1e-2
 
