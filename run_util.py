@@ -67,7 +67,6 @@ def run_simulation(env, agent, metrics, num_steps, is_rl_agent, seed=100, agent_
     epsilon = 0.1
 
     for _ in simulation_iterator(num_steps):
-      print("hello")
       state = env.reset()
       prev_bank_cash = state['bank_cash']
       state = np.argmax(state['applicant_features'])
