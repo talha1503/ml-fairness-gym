@@ -70,7 +70,7 @@ class Experiment(core.Params):
   return_json = attr.ib(default=True)  # Return the results as a json string.
   include_cumulative_loans = attr.ib(default=False)
 
-  def scenario_builder(self, is_rl_agent):
+  def scenario_builder(self, rl_agent):
     """Returns an agent and environment pair."""
     env_params = lending_params.DelayedImpactParams(
         applicant_distribution=lending_params.two_group_credit_clusters(
@@ -81,7 +81,7 @@ class Experiment(core.Params):
         cluster_shift_increment=self.cluster_shift_increment,
     )
     env = lending.DelayedImpactEnv(env_params)
-    if is_rl_agent:
+    if rl_agent:
         agent = None
     else:
         agent_params = classifier_agents.ScoringAgentParams(
@@ -105,14 +105,14 @@ class Experiment(core.Params):
         agent.seed(100)
     return env, agent
 
-  def run(self, is_rl_agent):
+  def run(self, rl_agent):
     """Run a lending experiment.
 
     Returns:
       A json encoding of the experiment result.
     """
 
-    env, agent = self.scenario_builder(is_rl_agent)
+    env, agent = self.scenario_builder(rl_agent)
     metrics = {
         'initial_credit_distribution':
             lending_metrics.CreditDistribution(env, step=0),
@@ -138,7 +138,7 @@ class Experiment(core.Params):
       metrics['cumulative_loans'] = lending_metrics.CumulativeLoans(env)
       metrics['cumulative_recall'] = lending_metrics.CumulativeRecall(env)
 
-    metric_results = run_util.run_simulation(env, agent, metrics, self.num_steps, is_rl_agent, self.seed)
+    metric_results = run_util.run_simulation(env, agent, metrics, self.num_steps, rl_agent, self.seed)
     # report = {
     #     'environment': {
     #         'name': env.__class__.__name__,

@@ -39,8 +39,8 @@ flags.DEFINE_bool('equalize_opportunity', False,
                   'If true, apply equality of opportunity constraints.')
 flags.DEFINE_integer('num_steps', 10000,
                      'Number of steps to run the simulation.')
-flags.DEFINE_bool('rl_agent', False,
-                  'If true, use an RL agent instead of a classification agent'
+flags.DEFINE_string('rl_agent', None,
+                  'Specify the rl agent to be used'
                   )
 
 FLAGS = flags.FLAGS
@@ -69,7 +69,7 @@ def main(argv):
         include_cumulative_loans=True,
         return_json=False,
         threshold_policy=(EQUALIZE_OPPORTUNITY if FLAGS.equalize_opportunity else
-                          MAXIMIZE_REWARD)).run(is_rl_agent=FLAGS.rl_agent)
+                          MAXIMIZE_REWARD)).run(rl_agent=FLAGS.rl_agent)
 
     title = ('Eq. opportunity' if FLAGS.equalize_opportunity else 'Max reward')
     metrics = result['metric_results']
